@@ -48,9 +48,9 @@ public class GameClient extends AbstractClient {
 		{
 			// Get the text of the message.
 			String message = (String)arg0;
-      
+			
 			// If we successfully logged in, tell the login controller.
-			if (message.equals("LoginSuccessful")) {
+			if (message.equals("LoginSuccessful")) { 
 				loginControl.loginSuccess();
 			}
       

@@ -1,5 +1,6 @@
 package seGroupProject;
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,7 @@ public class WaitingControl implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		String command = ae.getActionCommand();
 		
-		
+		CardLayout cardLayout = (CardLayout)container.getLayout();
+		cardLayout.show(container, "6");
 	}
 }

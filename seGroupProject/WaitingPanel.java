@@ -19,11 +19,11 @@ public class WaitingPanel extends JPanel {
 		JPanel labelPanel = new JPanel(new GridLayout(2, 1, 5, 5));
   		errorLabel = new JLabel("", JLabel.CENTER);
   		errorLabel.setForeground(Color.RED);
-  		JLabel instructionLabel = new JLabel("Choose to start you own game or join another", JLabel.CENTER);
+  		JLabel instructionLabel = new JLabel("Choose to start your own game or join another", JLabel.CENTER);
   		labelPanel.add(errorLabel);
   		labelPanel.add(instructionLabel);
   		
-  	// Create a panel for the buttons.
+  		// Create a panel for the buttons.
     	JPanel buttonPanel = new JPanel();
     	JButton ngButton = new JButton("New Game");
     	ngButton.addActionListener(wc);

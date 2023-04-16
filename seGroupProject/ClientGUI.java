@@ -37,19 +37,26 @@ public class ClientGUI extends JFrame {
     CreateAccountControl cac = new CreateAccountControl(container,client);
     WaitingControl wc = new WaitingControl(container, client);
     //ViewResultsControl vrc = new ViewResultsControl(container, client);
-    //GameControl gc = new GameControl(container, client);
     
     //Set the client info
     client.setLoginControl(lc);
     client.setCreateAccountControl(cac);
+    client.setWaitingControl(wc);
+    
       
-    // Create the four views. (need the controller to register with the Panels
+    // Create the views. (need the controller to register with the Panels
     JPanel view1 = new InitialPanel(ic);
     JPanel view2 = new LoginPanel(lc);
     JPanel view3 = new CreateAccountPanel(cac);
     JPanel view4 = new WaitingPanel(wc);
     //JPanel view5 = new ViewResultsPanel(vrc);
-    //JPanel view6 = new GamePanel(gc);
+    JPanel view6 = null;
+	try {
+		view6 = new GamePanel();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     
     // Add the views to the card layout container.
     container.add(view1, "1");
@@ -57,7 +64,7 @@ public class ClientGUI extends JFrame {
     container.add(view3, "3");
     container.add(view4, "4");
     //container.add(view5, "5");
-    //container.add(view6, "6");
+    container.add(view6, "6");
       
     // Show the initial view in the card layout.
     cardLayout.show(container, "1");
