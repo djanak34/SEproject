@@ -1,5 +1,7 @@
 package seGroupProject;
 
+import java.io.IOException;
+
 import ocsf.client.AbstractClient;
 
 public class GameClient extends AbstractClient {
@@ -8,6 +10,7 @@ public class GameClient extends AbstractClient {
 	private CreateAccountControl createAccountControl;
 	private WaitingControl waitingControl;
 	private ViewResultsControl viewResultsControl;
+	private Car car;
 	private GameControl gameControl;
 
 	// Setters for the GUI controllers.
@@ -16,6 +19,10 @@ public class GameClient extends AbstractClient {
 	}
 	public void setCreateAccountControl(CreateAccountControl createAccountControl) {
 		this.createAccountControl = createAccountControl;
+	}
+	
+	public void setCar (Car car) {
+		this.car = car;
 	}
   
 	public void setWaitingControl (WaitingControl waitingControl) {
@@ -65,6 +72,31 @@ public class GameClient extends AbstractClient {
 			else if (message.equals("GameSuccessful")) {
 				
 			}
+			
+			else if(message.equals("0")) {
+		    	  RaceTrack.assignedCar = 0;
+		    	  System.out.println("Allocated player 1 car");
+		          RaceTrack.LoadTrack();
+		      }
+		      else if(message.equals("1")) {
+		    	  RaceTrack.assignedCar = 1;
+		    	  System.out.println("Allocated player 2 car");
+		          RaceTrack.LoadTrack();
+		          
+		          try {
+					sendToServer("start game");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		          RaceTrack.LoadTrack();
+		      }
+		      else if(message.equals("exit")) {
+		    	
+		          System.out.println("Server closing...");
+		          RaceTrack.window.dispose();
+		          System.exit(0); 
+		      }
 		}
     
 		// If we received an Error, figure out where to display it.

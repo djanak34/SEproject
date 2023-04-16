@@ -15,8 +15,8 @@ public class GameServer extends AbstractServer
   private JTextArea log;
   private JLabel status;
   private boolean running = false;
-  //private Database database = new Database();
-  private ArrayList<String> list = new ArrayList<String>();
+  private DatabaseFile database;
+  private int gameID;
 
   // Constructor for initializing the server with default settings.
   public GameServer()
@@ -24,10 +24,6 @@ public class GameServer extends AbstractServer
     super(12345);
     this.setTimeout(500);
   }
-  
-  /*public void setDatabase(Database database) {
-	  this.database = database;
-  }*/
 
   // Getter that returns whether the server is currently running.
   public boolean isRunning()
@@ -40,11 +36,19 @@ public class GameServer extends AbstractServer
   {
     this.log = log;
   }
+  
   public void setStatus(JLabel status)
   {
     this.status = status;
   }
-
+  
+  	public void setDatabase(DatabaseFile database) {
+  		this.database = database;
+  	}
+  	
+  	public int getGameID() {
+  		return gameID;
+  	}
   // When the server starts, update the GUI.
   public void serverStarted()
   {
@@ -86,15 +90,8 @@ public class GameServer extends AbstractServer
       // Check the username and password with the database.
       LoginData data = (LoginData)arg0;
       Object result;
-      list = this.database.query("select * from user");
-      if (database.verifyCreds(data.getUsername(), data.getPassword(), list))
+      if (database.verifyAccount(data))
       {
-    	  try {
-				database.executeDML("insert into user values ('" + data.getUsername() +"', '" + data.getPassword() + "')");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
         result = "LoginSuccessful";
         log.append("Client " + arg1.getId() + " successfully logged in as " + data.getUsername() + "\n");
       }
@@ -121,8 +118,7 @@ public class GameServer extends AbstractServer
       // Try to create the account.
       CreateAccountData data = (CreateAccountData)arg0;
       Object result;
-      list = this.database.query("select username from user");
-      if (database.addAccount(data.getUsername(), data.getPassword(), list))
+      if (database.createNewAccount(data))
       {
         result = "CreateAccountSuccessful";
         log.append("Client " + arg1.getId() + " created a new account called " + data.getUsername() + "\n");
@@ -142,6 +138,14 @@ public class GameServer extends AbstractServer
       {
         return;
       }
+    }
+    else if(arg0 instanceof String) {
+    	String message = (String)arg0;
+    	
+    	if (message.equals("start game")) {
+    		gameID = 0;
+    		gameID++;
+    	}
     }
   }
 

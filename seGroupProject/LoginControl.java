@@ -28,7 +28,7 @@ public class LoginControl implements ActionListener {
 		}
 
 		// The Submit button submits the login information to the server.
-		else if (command == "Submit") {
+		else if (command == "Log In") {
 			// Get the username and password the user entered.
 			LoginPanel loginPanel = (LoginPanel)container.getComponent(1);
 			LoginData data = new LoginData(loginPanel.getUsername(), loginPanel.getPassword());

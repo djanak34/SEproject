@@ -1,5 +1,22 @@
 package seGroupProject;
 
-public class WaitingControl {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
+public class WaitingControl implements ActionListener {
+	private JPanel container;
+	private GameClient client;
+  
+	public WaitingControl(JPanel container, GameClient client) {
+		this.container = container;
+		this.client = client;
+		}
+	
+	public void actionPerformed(ActionEvent ae) {
+		String command = ae.getActionCommand();
+		
+		
+	}
 }
