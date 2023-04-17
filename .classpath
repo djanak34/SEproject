@@ -6,6 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/dilla/labs/seGroupProject/ocsf.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dilla/labs/seGroupProject/ocsf.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/dilla/labs/seGroupProject/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path=""/>
 </classpath>

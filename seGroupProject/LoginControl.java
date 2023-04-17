@@ -9,6 +9,7 @@ public class LoginControl implements ActionListener {
 	// Private data fields for the container and chat client.
 	private JPanel container;
 	private GameClient client;
+	private LoginControl lc;
   
 // Constructor for the login controller.
 	public LoginControl(JPanel container, GameClient client) {
@@ -40,16 +41,14 @@ public class LoginControl implements ActionListener {
 			}
 
 			// Submit the login information to the server.
-			//try
-			//{
-				//client.sendToServer(data);
-				CardLayout cardLayout = (CardLayout)container.getLayout();
-				cardLayout.show(container, "4");
-			//}
-			//catch (IOException e)
-			//{
-			//	displayError("Error connecting to the server.");
-			//}
+			try
+			{
+				client.sendToServer(data);
+			}
+			catch (IOException e)
+			{
+				displayError("Error connecting to the server.");
+			}
 		}
 	}
 
