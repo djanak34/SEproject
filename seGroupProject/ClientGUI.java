@@ -23,7 +23,7 @@ public class ClientGUI extends JFrame {
 		}
      
     // Set the title and default close operation.
-    this.setTitle("Chat Client");
+    this.setTitle("Game Client");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     // Create the card layout container.
@@ -36,34 +36,30 @@ public class ClientGUI extends JFrame {
     LoginControl lc = new LoginControl(container,client);
     CreateAccountControl cac = new CreateAccountControl(container,client);
     WaitingControl wc = new WaitingControl(container, client);
-    //ViewResultsControl vrc = new ViewResultsControl(container, client);
+    GameControl gc = new GameControl(container, client);
+    ViewResultsControl vrc = new ViewResultsControl(container, client);
     
     //Set the client info
     client.setLoginControl(lc);
     client.setCreateAccountControl(cac);
     client.setWaitingControl(wc);
-    
+    client.setGameControl(gc);
+    client.setViewResultsControl(vrc);
       
     // Create the views. (need the controller to register with the Panels
     JPanel view1 = new InitialPanel(ic);
     JPanel view2 = new LoginPanel(lc);
     JPanel view3 = new CreateAccountPanel(cac);
     JPanel view4 = new WaitingPanel(wc);
-    //JPanel view5 = new ViewResultsPanel(vrc);
-    JPanel view6 = null;
-	try {
-		view6 = new GamePanel();
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+    JPanel view5 = new GamePanel(gc);
+    JPanel view6 = new ViewResultsPanel(vrc);
     
     // Add the views to the card layout container.
     container.add(view1, "1");
     container.add(view2, "2");
     container.add(view3, "3");
     container.add(view4, "4");
-    //container.add(view5, "5");
+    container.add(view5, "5");
     container.add(view6, "6");
       
     // Show the initial view in the card layout.
@@ -81,6 +77,11 @@ public class ClientGUI extends JFrame {
 
 // Main function that creates the client GUI when the program is started.
 public static void main(String[] args) {
-	new ClientGUI();
+	try {
+		new ClientGUI();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 }

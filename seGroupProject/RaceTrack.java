@@ -10,6 +10,8 @@ public class RaceTrack extends JFrame
    public static int assignedCar; 
    private static GameClient client;
    public static RaceTrack window;
+   private GameControl gc;
+ 
     
    public static void LoadTrack() 
    {
@@ -42,8 +44,8 @@ public class RaceTrack extends JFrame
    // Constructor
    public RaceTrack() throws Exception 
 	{  
-      // Retrieve panel from RaceTrackJPanel    
-      GamePanel panel = new GamePanel();
+       
+      GamePanel panel = new GamePanel(gc);
          
       // Display panel 
       panel.setFocusable(true);

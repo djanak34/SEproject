@@ -203,7 +203,7 @@ public class Car extends JPanel
         int yValueCar = carLocation[ 1 ] + deltaY; 
 
         boolean road = false;
-        Rectangle[] r = GamePanel.r;
+        Rectangle[] r = GameControl.r;
 
    
         Rectangle currentCar =  new Rectangle( xValueCar, yValueCar, 35, 20 );
@@ -248,7 +248,7 @@ public class Car extends JPanel
   
     public void CheckLap()
     {
-        Rectangle[] r = GamePanel.r;
+        Rectangle[] r = GameControl.r;
         Rectangle currentCar =  getCarRectangle();
         
         
@@ -259,7 +259,7 @@ public class Car extends JPanel
         }   
          
         
-        if(GamePanel.finishLineRectangle.intersects(currentCar) && currLap < 3 && hasPassedcheckPoint == true)
+        if(GameControl.finishLineRectangle.intersects(currentCar) && currLap < 3 && hasPassedcheckPoint == true)
         {
             currLap++;
             hasPassedcheckPoint = false; 
