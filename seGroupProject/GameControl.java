@@ -394,7 +394,7 @@ public class GameControl extends JPanel implements ActionListener, KeyListener
         p1car.paint(g, this); 
         p2car.paint(g, this);  
         
-        updateFeed();
+        gp.updateFeed();
     }
     public void StartPosition() throws Exception
     {
@@ -411,29 +411,6 @@ public class GameControl extends JPanel implements ActionListener, KeyListener
         carSpeed = 0; 
         currLap = 0;  
         
-    }
-
-    public void updateFeed()
-    {
-    	// GamePanel gamePanel = (GamePanel)container.getComponent(5);
-        statusLabelOne.setText("<html><body align = 'left'>" + 
-                              "<b><u>P1 Car</b></u><br>" +
-                              "Laps Remaining : "+(3-GameControl.p1car.currLap)+"<br>"  +
-                              "Current Speed : "+GameControl.p1car.carSpeed*30+" km/h <br>"   + 
-                              "</body></html>");
-         statusLabelOne.setFont( new Font( "Monospaced", 1, 15 ) );
-         statusLabelOne.setLocation(121, 15);
-                              
-         statusLabelTwo.setText("<html><body align = 'left'>" + 
-                              "<b><u>KART OPP</b></u><br>" + 
-                              "Laps Remaining : "+(3-GameControl.p2car.currLap)+"<br>"  +
-                              "Current Speed : "+GameControl.p2car.carSpeed*30+" km/h <br>"   +                      
-                              "</body></html>");             
-         statusLabelTwo.setFont( new Font( "Monospaced", 1, 15 ) );
-         statusLabelTwo.setLocation(530, 15);
-         gp.setLabelone(statusLabelOne);
-         gp.setLabeltwo(statusLabelTwo);
-           
     }
     public void paint( Graphics g, GameControl panel )
     {

@@ -23,8 +23,9 @@ public class WaitingControl implements ActionListener {
 		String command = ae.getActionCommand();
 
 		// The Cancel button takes the user back to the initial panel.
-		if (command == "Start Game") {
-			
+		if (command == "New Game") {
+			CardLayout cardLayout = (CardLayout)container.getLayout();
+			cardLayout.show(container, "5");
 		}
 		else if (command == "Join Game") {
 			

@@ -10,8 +10,8 @@ public class GameClient extends AbstractClient {
 	private CreateAccountControl createAccountControl;
 	private WaitingControl waitingControl;
 	private ViewResultsControl viewResultsControl;
-	private Car car;
 	private GameControl gameControl;
+	private GamePanel car;
 
 	// Setters for the GUI controllers.
 	public void setLoginControl(LoginControl loginControl) {
@@ -21,7 +21,7 @@ public class GameClient extends AbstractClient {
 		this.createAccountControl = createAccountControl;
 	}
 	
-	public void setCar (Car car) {
+	public void setCar (GamePanel car) {
 		this.car = car;
 	}
   
@@ -32,10 +32,10 @@ public class GameClient extends AbstractClient {
 	public void setViewResultsControl(ViewResultsControl viewResultsControl) {
 		this.viewResultsControl = viewResultsControl;
 	}
-	
 	public void setGameControl(GameControl gameControl) {
+		// TODO Auto-generated method stub
 		this.gameControl = gameControl;
-	}
+	}  
 	// Constructor for initializing the client with default settings.
 	public GameClient() {
 		super("localhost", 8300);
@@ -84,7 +84,7 @@ public class GameClient extends AbstractClient {
 		          RaceTrack.LoadTrack();
 		          
 		          try {
-					sendToServer("start game");
+					sendToServer("start");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -114,5 +114,6 @@ public class GameClient extends AbstractClient {
 				createAccountControl.displayError(error.getMessage());
 			}
 		}
-	}  
+	}
+	
 }

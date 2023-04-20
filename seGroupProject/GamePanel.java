@@ -19,6 +19,8 @@ public class GamePanel extends JPanel
     private JLabel statusLabelTwo;
     public static Timer timer;
     protected ImageIcon[] carImages; 
+    public static boolean serverActive = false;
+    
 
     // Setter for the error text.
     public void setLabelone(JLabel statusLabelOne)
@@ -32,14 +34,14 @@ public class GamePanel extends JPanel
     }
     public GamePanel(GameControl gc)
     {   
-        try {
-			track = ImageIO.read(new File ("track.png"));
+    	try {
+			track = ImageIO.read(getClass().getResource("/seGroupProject/track.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         try {
-			carLogo = ImageIO.read( new File ("carlogo.png"));
+			carLogo = ImageIO.read(getClass().getResource("/seGroupProject/carlogo.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,12 +63,31 @@ public class GamePanel extends JPanel
         timer = new Timer( 100, gc );
         timer.start();
 
-        gc.updateFeed();
+        updateFeed();
+        this.add(statusLabelOne);
+        this.add(statusLabelTwo);
         // Create a panel for the buttons.
         JPanel buttonPanel = new JPanel();
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(gc);   
         buttonPanel.add(quitButton);
+        this.add(buttonPanel);
+        this.add(gc);
     } 
+    public void updateFeed() {
+    	
+    	 statusLabelOne = new JLabel("", JLabel.LEFT);
+         statusLabelOne.setText("Player 1 \n" + "Laps Remaining : "+(3-GameControl.p1car.currLap)+"\n"  +
+                               "  Current Speed : "+GameControl.p1car.carSpeed*30+"\n");
+          statusLabelOne.setFont( new Font( "Monospaced", 1, 15 ) );
+          statusLabelOne.setLocation(121, 15);
+          
+          statusLabelTwo = new JLabel("", JLabel.LEFT);                     
+          statusLabelTwo.setText("Player 2 \n" + 
+                               "Laps Remaining : "+(3-GameControl.p2car.currLap)+"\n"  +
+                               "  Current Speed : "+GameControl.p2car.carSpeed*30+"\n");             
+          statusLabelTwo.setFont( new Font( "Monospaced", 1, 15 ) );
+          statusLabelTwo.setLocation(530, 15);
+    }
     
 }
