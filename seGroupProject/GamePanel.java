@@ -64,15 +64,11 @@ public class GamePanel extends JPanel
         timer.start();
 
         updateFeed();
-        this.add(statusLabelOne);
-        this.add(statusLabelTwo);
         // Create a panel for the buttons.
         JPanel buttonPanel = new JPanel();
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(gc);   
         buttonPanel.add(quitButton);
-        this.add(buttonPanel);
-        this.add(gc);
     } 
     public void updateFeed() {
     	
