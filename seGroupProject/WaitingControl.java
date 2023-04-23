@@ -28,7 +28,8 @@ public class WaitingControl implements ActionListener {
 			cardLayout.show(container, "5");
 		}
 		else if (command == "Join Game") {
-			
+			CardLayout cardLayout = (CardLayout)container.getLayout();
+			cardLayout.show(container, "5");			
 		}
 	}
 }

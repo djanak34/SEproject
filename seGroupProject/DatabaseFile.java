@@ -1,82 +1,118 @@
 package seGroupProject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.*;
+import java.util.*;
+
 
 public class DatabaseFile {
-	private String file = "seGroupProject/database.txt";
-	private String [][] dataArr;
-	
-	// function to be called when username is to be checked for repeated usernames
-	public boolean verifyAccount (LoginData data) {
-		boolean choice = false;
-		
-		for (int i = 0; i < 100; i++) {
-			if (data.getUsername().equals(dataArr[i][1]) && data.getPassword().equals(dataArr[i][2])) {
-				choice = true;
-				break;
-			}
+	  private Connection conn;
+	  private DatabaseFile database;
+	  public DatabaseFile()
+	  {
+		  Properties prop = new Properties();
+		  FileInputStream fis;
+		  String url = "";
+		  String user = "";
+		  String password = "";
+		try {
+			fis = new FileInputStream("seGroupProject/db.properties");
+			prop.load(fis);
+			url = prop.getProperty("url");
+			user = prop.getProperty("user");
+			password = prop.getProperty("password");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return choice;
-	}
-	
-	// function to be called when user is creating a new account
-	public boolean createNewAccount (CreateAccountData data) {
-		boolean choice = true;
-		File infile = new File(file);
-		
-		for (int i = 0; i < 100; i++) {
-			if (data.getUsername().equals(dataArr[i][1])) {
-				choice = false;
-				break;
-			}
+		  
+	    try {
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		User user = new User();
-		String idNum = Integer.toString(user.getIdNum());
-		String username = data.getUsername();
-		String password = data.getPassword();
+	    
+	  }
 		
-		
-		if (choice == true) {
-			try (BufferedWriter fw = new BufferedWriter(new FileWriter(infile, true))) {
-				fw.newLine();
-				fw.write(idNum + " ");
-				fw.write(username + " ");
-				fw.write(password);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return choice;
-	}
-	
-	// constructor of the database file
-	// this will import all of the values of the txt file so it can be used locally
-	public DatabaseFile() throws IOException {
-		File infile = new File(file);
-		String [][] dataArr = new String[100][3];
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(infile))) {
-			// Places all idNums, Usernames, and passwords into a 2d array
-			String line;
-			int counter = 0;
-			String [] tempArr = new String [3]; 
-			while((line = br.readLine()) != null) {
-				tempArr = line.split(" ");
-				for (int i = 0; i < 3; i++) {
-					dataArr [counter][i] = tempArr[i];
+		// function to be called when username is to be checked for repeated usernames
+		public boolean verifyCreds (String username, String password, ArrayList<String> list) {
+			boolean choice = false;
+			String usepass = username + "," + password + ",";
+			for (int i = 1; i < list.size(); i+=2) {
+				if(list.get(i).equals(usepass)){
+					choice = true;
 				}
-				counter++;
 			}
+			
+			return choice;
 		}
-		this.dataArr = dataArr;
+		
+		// function to be called when user is creating a new account
+		public boolean addAccount (String username, String password, ArrayList<String> list) {
+			boolean choice = true;
+			String newUser = username + ",";
+			for (int i = 0; i < list.size(); i++) {
+				if (newUser.equals(list.get(i))) {
+					choice = false;
+					return choice;
+				}
+			}
+			
+			return choice;
+		}
+	  
+	  public ArrayList<String> query(String query)
+	  {
+	    int i = 0;
+	    int rowCount = 0; // Detect empty result set
+	    ArrayList<String> array = new ArrayList<String>();
+	    
+	    // Create a statement from the connection
+	    Statement stmt;
+	    try {
+	    stmt= conn.createStatement();
+	    
+	    // Run the query
+	    ResultSet rs = stmt.executeQuery(query);
+	    
+	    // get meta data
+	    ResultSetMetaData rmd = rs.getMetaData();
+	    
+	    int noColumns = rmd.getColumnCount();
+	    
+	    while (rs.next()) {
+	    	rowCount++;
+	    	String record = "";
+	    	for (i = 0; i < noColumns; i++) {
+	    		String value = rs.getString(i+1);
+	    		record += value + ",";
+	    		array.add(record);
+	    	}
+	    }
+	    
+	    if (rowCount > 0)
+	    	return array;
+	    else
+	    	return null;
+	    }
+	    catch (SQLException e){
+	    	e.printStackTrace();
+	    	
+	    	return null;
+	    }
+	  }
+	  
+	  public void executeDML(String dml) throws SQLException
+	  {
+	    Statement stmt = conn.createStatement();
+	    stmt.execute(dml);
+	  }
 	}
-}

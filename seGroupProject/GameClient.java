@@ -76,12 +76,12 @@ public class GameClient extends AbstractClient {
 			else if(message.equals("0")) {
 		    	  RaceTrack.assignedCar = 0;
 		    	  System.out.println("Allocated player 1 car");
-		          RaceTrack.LoadTrack();
+		          RaceTrack.LoadTrack(gameControl);
 		      }
 		      else if(message.equals("1")) {
 		    	  RaceTrack.assignedCar = 1;
 		    	  System.out.println("Allocated player 2 car");
-		          RaceTrack.LoadTrack();
+		          RaceTrack.LoadTrack(gameControl);
 		          
 		          try {
 					sendToServer("start");
@@ -89,7 +89,7 @@ public class GameClient extends AbstractClient {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		          RaceTrack.LoadTrack();
+		          RaceTrack.LoadTrack(gameControl);
 		      }
 		      else if(message.equals("exit")) {
 		    	
