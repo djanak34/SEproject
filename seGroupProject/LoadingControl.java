@@ -1,5 +1,5 @@
 package seGroupProject;
 
-public class ViewResultsData {
+public class LoadingControl {
 
 }

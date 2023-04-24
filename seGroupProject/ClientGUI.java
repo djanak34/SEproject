@@ -8,7 +8,7 @@ public class ClientGUI extends JFrame {
   
   
 	// Constructor that creates the client GUI.
-	public ClientGUI() {
+	public ClientGUI() throws Exception {
 		// Set up the chat client.
 		GameClient client = new GameClient();
 		client.setHost("localhost");
@@ -25,6 +25,7 @@ public class ClientGUI extends JFrame {
     // Set the title and default close operation.
     this.setTitle("Game Client");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
         
     // Create the card layout container.
     CardLayout cardLayout = new CardLayout();
@@ -45,6 +46,7 @@ public class ClientGUI extends JFrame {
     client.setWaitingControl(wc);
     client.setGameControl(gc);
     client.setViewResultsControl(vrc);
+    
       
     // Create the views. (need the controller to register with the Panels
     JPanel view1 = new InitialPanel(ic);
@@ -67,11 +69,11 @@ public class ClientGUI extends JFrame {
     
     // Add the card layout container to the JFrame.
     // GridBagLayout makes the container stay centered in the window.
-    this.setLayout(new GridBagLayout());
+   // this.setLayout(new AbsoluteLa());
     this.add(container);
 
     // Show the JFrame.
-    this.setSize(550, 350);
+    this.setSize(850, 650);
     this.setVisible(true);
   }
 

@@ -1,29 +1,33 @@
 package seGroupProject;
 
 import java.awt.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
+import java.awt.event.*;
 import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
-import java.lang.String;
-import java.time.LocalTime;
+import javax.swing.*;
+import javax.imageio.*;
 
 public class GamePanel extends JPanel
 {
-    BufferedImage track; 
-    BufferedImage carLogo;
-    private JLabel statusLabelOne;
-    private JLabel statusLabelTwo;
-    public static Timer timer;
-    protected ImageIcon[] carImages; 
-    public static boolean serverActive = false;
+	   BufferedImage track;
+	
+	   private JLabel statusLabelOne;
+	   private JLabel statusLabelTwo;
+  
+    static Rectangle[] r = new Rectangle[]
+    {        
+        new Rectangle( 45, 482, 755, 102 ),       new Rectangle( 30, 344, 135, 238 ), 
+        new Rectangle( 45, 344, 338, 101 ),      new Rectangle( 232, 232, 151, 213 ),    
+        new Rectangle( 45, 225, 338, 106 ),       new Rectangle( 30, 90, 130, 241 ), 
+        new Rectangle( 45, 90, 755, 97 ),        new Rectangle( 675, 90, 125, 208 ),
+        new Rectangle( 383, 193, 417, 105 ),     new Rectangle( 375, 193, 166, 287 ),    
+        new Rectangle( 383, 375, 417, 105),      new Rectangle( 680, 375, 120, 207) 
+    };    
     
-
-    // Setter for the error text.
-    public void setLabelone(JLabel statusLabelOne)
+    public static Rectangle finishLineRectangle = new Rectangle( 580, 500, 28, 140);
+  
+    
+    
+      public void setLabelone(JLabel statusLabelOne)
     {
       this.statusLabelOne = statusLabelOne;
     }
@@ -32,58 +36,62 @@ public class GamePanel extends JPanel
     {
       this.statusLabelTwo = statusLabelTwo;
     }
-    public GamePanel(GameControl gc)
+    public GamePanel(GameControl gc) throws Exception
     {   
-    	try {
-			track = ImageIO.read(getClass().getResource("/seGroupProject/track.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        try {
-			carLogo = ImageIO.read(getClass().getResource("/seGroupProject/carlogo.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        try {
-			GameControl.RetreiveImages();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
+        track = ImageIO.read( getClass().getResource( "track.png" ) );
+        Car.RetreiveImages();
+        
+       
+        
         
         statusLabelOne = new JLabel();
-        add(statusLabelOne);
+        statusLabelOne.setSize(198, 63);
         statusLabelTwo = new JLabel();
+        statusLabelTwo.setSize(198, 63);
+        
+        add(statusLabelOne);
         add(statusLabelTwo);
                 
         addKeyListener(gc); 
         
-        timer = new Timer( 100, gc );
-        timer.start();
-
-        updateFeed();
-        // Create a panel for the buttons.
-        JPanel buttonPanel = new JPanel();
-        JButton quitButton = new JButton("Quit");
-        quitButton.addActionListener(gc);   
-        buttonPanel.add(quitButton);
+        JButton quitButton = new JButton("Quit Game");
+        quitButton.setBounds(634, 26, 113, 30);
+        quitButton.addActionListener(gc);
+        add(quitButton);
+       
+       
     } 
+    @Override
+    public void paintComponent(Graphics g) 
+    {        
+        super.paintComponent( g );
+        
+        g.drawImage( track, 50, 100, 746, 498, Color.white, this ); 
+        
+        Car.p1car.paint(g, this); 
+        Car.p2car.paint(g, this);  
+        
+        updateFeed();
+    }
     public void updateFeed() {
     	
-    	 statusLabelOne = new JLabel("", JLabel.LEFT);
-         statusLabelOne.setText("Player 1 \n" + "Laps Remaining : "+(3-GameControl.p1car.currLap)+"\n"  +
-                               "  Current Speed : "+GameControl.p1car.carSpeed*30+"\n");
-          statusLabelOne.setFont( new Font( "Monospaced", 1, 15 ) );
-          statusLabelOne.setLocation(121, 15);
-          
-          statusLabelTwo = new JLabel("", JLabel.LEFT);                     
-          statusLabelTwo.setText("Player 2 \n" + 
-                               "Laps Remaining : "+(3-GameControl.p2car.currLap)+"\n"  +
-                               "  Current Speed : "+GameControl.p2car.carSpeed*30+"\n");             
-          statusLabelTwo.setFont( new Font( "Monospaced", 1, 15 ) );
-          statusLabelTwo.setLocation(530, 15);
+    	statusLabelOne.setText("<html><body align = 'left'>" + 
+                "<b><u>Player One</b></u><br>" +
+                "Laps Remaining : "+(3-Car.p1car.currLap)+"<br>"  +
+                "Current Speed : "+Car.p1car.carSpeed*30+" km/h <br>"   + 
+                "</body></html>");
+    	statusLabelOne.setFont( new Font( "Monospaced", 1, 15 ) );
+    	statusLabelOne.setLocation(85, 5);
+                
+    	statusLabelTwo.setText("<html><body align = 'left'>" + 
+                "<b><u>Player Two</b></u><br>" + 
+                "Laps Remaining : "+(3-Car.p2car.currLap)+"<br>"  +
+                "Current Speed : "+Car.p2car.carSpeed*30+" km/h <br>"   +                      
+                "</body></html>");             
+    	statusLabelTwo.setFont( new Font( "Monospaced", 1, 15 ) );
+    	statusLabelTwo.setLocation(350, 5);
     }
-    
+
+
 }

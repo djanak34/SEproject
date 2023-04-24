@@ -11,7 +11,6 @@ public class GameClient extends AbstractClient {
 	private WaitingControl waitingControl;
 	private ViewResultsControl viewResultsControl;
 	private GameControl gameControl;
-	private GamePanel car;
 
 	// Setters for the GUI controllers.
 	public void setLoginControl(LoginControl loginControl) {
@@ -20,11 +19,6 @@ public class GameClient extends AbstractClient {
 	public void setCreateAccountControl(CreateAccountControl createAccountControl) {
 		this.createAccountControl = createAccountControl;
 	}
-	
-	public void setCar (GamePanel car) {
-		this.car = car;
-	}
-  
 	public void setWaitingControl (WaitingControl waitingControl) {
 		this.waitingControl = waitingControl;
 	}
@@ -48,7 +42,7 @@ public class GameClient extends AbstractClient {
 		{
 			// Get the text of the message.
 			String message = (String)arg0;
-			
+			String[] args = message.split(" ");
 			// If we successfully logged in, tell the login controller.
 			if (message.equals("LoginSuccessful")) { 
 				loginControl.loginSuccess();
@@ -58,20 +52,9 @@ public class GameClient extends AbstractClient {
 			else if (message.equals("CreateAccountSuccessful")) {
 				createAccountControl.createAccountSuccess();
 			}
-			
-			// If the user chooses to join a game
-			else if (message.equals("WaitingSuccessful")) {
-				
-			}
-			
-			// If the user chooses to view the results of their race
-			else if (message.equals("ViewResultsSuccessful")) {
-				
-			}
-			
-			else if (message.equals("GameSuccessful")) {
-				
-			}
+			//else if (message.equals("GameSuccessful")) {
+			//	gameControl.gameSuccess();
+			//}
 			
 			else if(message.equals("0")) {
 		    	  RaceTrack.assignedCar = 0;
@@ -84,19 +67,34 @@ public class GameClient extends AbstractClient {
 		          RaceTrack.LoadTrack(gameControl);
 		          
 		          try {
-					sendToServer("start");
+					sendToServer("start game");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		          RaceTrack.LoadTrack(gameControl);
 		      }
+		      else if(message.equals("GameSuccessful")) 
+		      {
+		    	  Car.serverActive = true;
+		      }
 		      else if(message.equals("exit")) {
 		    	
 		          System.out.println("Server closing...");
 		          RaceTrack.window.dispose();
 		          System.exit(0); 
+		          Car.serverActive = false;
 		      }
+		      else 
+		      {
+		    	  String[] args1 = message.split(" ");
+		    	  if(args1 != null && args1.length == 6) {
+		             Car.p1car.UpdateCarDetails(args1);
+		             Car.p2car.UpdateCarDetails(args1);
+		    	  }
+		           Car.serverActive = true;  // continue running game 
+		       }       
+		       
 		}
     
 		// If we received an Error, figure out where to display it.

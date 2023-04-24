@@ -11,5 +11,6 @@
 			<attribute name="javadoc_location" value="file:/C:/Users/dilla/labs/seGroupProject/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dilla/labs/seGroupProject/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
